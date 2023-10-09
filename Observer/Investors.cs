@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 
 namespace Observer.RealWorld
@@ -15,6 +15,14 @@ namespace Observer.RealWorld
         private static void Main()
         {
             // Create IBM stock and attach investors
+
+            var ufs = new UFS("UFS", 100.00);
+
+            ufs.Attach(new Investor("Nagibe"));
+
+            ufs.Attach(new Investor("McMissil"));
+
+
 
             var ibm = new IBM("IBM", 120.00);
 
@@ -34,6 +42,7 @@ namespace Observer.RealWorld
 
             ibm.Price = 120.75;
 
+            ufs.Price = 110.0;
 
             // Wait for user
 
@@ -122,6 +131,16 @@ namespace Observer.RealWorld
         // Constructor
 
         public IBM(string symbol, double price)
+            : base(symbol, price)
+        {
+        }
+    }
+
+    internal class UFS : Stock
+    {
+        // Constructor
+
+        public UFS(string symbol, double price)
             : base(symbol, price)
         {
         }

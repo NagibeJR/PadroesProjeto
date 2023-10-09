@@ -15,12 +15,15 @@ namespace Chain.RealWorld
         {
             // Setup Chain of Responsibility
 
+            Approver nagibe = new ChefeImediato();
+
             Approver larry = new Director();
 
             Approver sam = new VicePresident();
 
             Approver tammy = new President();
 
+            nagibe.SetSuccessor(larry);
 
             larry.SetSuccessor(sam);
 
@@ -31,21 +34,21 @@ namespace Chain.RealWorld
 
             var p = new Purchase(2034, 350.00, "Assets");
 
-            larry.ProcessRequest(p);
+            nagibe.ProcessRequest(p);
 
 
             p = new Purchase(2035, 32590.10, "Project X");
 
-            larry.ProcessRequest(p);
+            nagibe.ProcessRequest(p);
 
 
             p = new Purchase(2036, 122100.00, "Project Y");
 
-            larry.ProcessRequest(p);
+            nagibe.ProcessRequest(p);
 
 
             // Wait for user
-
+                 
             Console.ReadKey();
         }
     }
@@ -68,6 +71,25 @@ namespace Chain.RealWorld
         public abstract void ProcessRequest(Purchase purchase);
     }
 
+    /// <summary>
+    /// The 'ConcreteHandler' class
+    /// </summary>
+    internal class ChefeImediato : Approver
+    {
+        public override void ProcessRequest(Purchase purchase)
+        {
+            if (purchase.Amount < 10000.0)
+            {
+                Console.WriteLine("{0} approved request# {1}",
+                                  GetType().Name, purchase.Number);
+            }
+
+            else if (successor != null)
+            {
+                successor.ProcessRequest(purchase);
+            }
+        }
+    }
 
     /// <summary>
     /// The 'ConcreteHandler' class

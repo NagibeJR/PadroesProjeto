@@ -39,13 +39,28 @@ namespace Memento.RealWorld
 
             s.Budget = 1000000.0;
 
+            // Store internal state
+
+            var m2 = new ProspectMemory();
+
+            s.SaveMemento(m.Memento);
+
+
+            // Continue changing originator
+
+            s.Name = "Nagibe";
+
+            s.Phone = "(75) 99964-1967";
+
+            s.Budget = 100.0;
+
 
             // Restore saved state
 
-            s.Undo(m.Memento);
-            s.Undo(m.Memento);
+            s.Undo(m2.Memento);
+            s.Undo(m2.Memento);
 
-            s.Redo(m.Memento);
+            s.Redo(m2.Memento);
 
 
 

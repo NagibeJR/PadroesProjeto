@@ -47,6 +47,11 @@ namespace Strategy.RealWorld
             studentRecords.Sort();
 
 
+            studentRecords.SetSortStrategy(new HeapSort());
+
+            studentRecords.Sort();
+
+
             // Wait for user
 
             Console.ReadKey();
@@ -104,6 +109,18 @@ namespace Strategy.RealWorld
         }
     }
 
+    /// <summary>
+    /// A 'ConcreteStrategy' class
+    /// </summary>
+    internal class HeapSort : SortStrategy
+    {
+        public override void Sort(List<string> list)
+        {
+            //list.MergeSort(); not-implemented
+
+            Console.WriteLine("HeapSorted list ");
+        }
+    }
 
     /// <summary>
     /// The 'Context' class

@@ -19,6 +19,8 @@ namespace State.RealWorld
 
             var account = new Account("Jim Johnson");
 
+            var account2 = new Account("Nagibe");
+
 
             // Apply financial transactions
 
@@ -33,6 +35,18 @@ namespace State.RealWorld
             account.Withdraw(2000.00);
 
             account.Withdraw(1100.00);
+
+            account2.Deposit(5000.0);
+
+            account2.Deposit(3000.0);
+
+            account2.Deposit(550.0);
+
+            account2.PayInterest();
+
+            account2.Withdraw(2000.00);
+
+            account2.Withdraw(1100.00);
 
 
             // Wait for user
@@ -238,6 +252,76 @@ namespace State.RealWorld
     /// Gold indicates an interest bearing state
     /// </remarks>
     /// </summary>
+    internal class DiamontState : State
+    {
+        // Overloaded constructors
+
+        public DiamontState(State state)
+            : this(state.Balance, state.Account)
+        {
+        }
+
+
+        public DiamontState(double balance, Account account)
+        {
+            this.balance = balance;
+
+            this.account = account;
+
+            Initialize();
+        }
+
+
+        private void Initialize()
+        {
+            // Should come from a database
+
+            interest = 0.05;
+
+            lowerLimit = 100000.0;
+
+            upperLimit = 1000000000.0;
+        }
+
+
+        public override void Deposit(double amount)
+        {
+            balance += amount;
+
+            StateChangeCheck();
+        }
+
+
+        public override void Withdraw(double amount)
+        {
+            balance -= amount;
+
+            StateChangeCheck();
+        }
+
+
+        public override void PayInterest()
+        {
+            balance += interest*balance;
+
+            StateChangeCheck();
+        }
+
+
+        private void StateChangeCheck()
+        {
+            if (balance < 0.0)
+            {
+                account.State = new RedState(this);
+            }
+
+            else if (balance < lowerLimit)
+            {
+                account.State = new SilverState(this);
+            }
+        }
+    }
+
     internal class GoldState : State
     {
         // Overloaded constructors
@@ -288,7 +372,7 @@ namespace State.RealWorld
 
         public override void PayInterest()
         {
-            balance += interest*balance;
+            balance += interest * balance;
 
             StateChangeCheck();
         }

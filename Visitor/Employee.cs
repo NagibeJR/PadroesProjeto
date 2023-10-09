@@ -35,6 +35,8 @@ namespace Visitor.RealWorld
 
             e.Accept(new FaltasVisitor());
 
+            e.Accept(new FolgasVisitor());
+
 
             // Wait for user
 
@@ -120,6 +122,25 @@ namespace Visitor.RealWorld
         #endregion
     }
 
+    internal class FolgasVisitor : IVisitor
+    {
+        #region IVisitor Members
+
+        public void Visit(Element element)
+        {
+            var employee = element as Employee;
+
+
+            // Provide 3 extra ferias days
+
+            Console.WriteLine("{0} {1}'s new ferias days: {2}",
+                              employee.GetType().Name, employee.Name,
+                              employee.Folgas);
+        }
+
+        #endregion
+    }
+
 
     /// <summary>
     /// The 'Element' abstract class
@@ -138,13 +159,14 @@ namespace Visitor.RealWorld
         // Constructor
 
         public Employee(string name, double income,
-                        int vacationDays)
+                        int vacationDays, int folgas)
         {
             Name = name;
 
             Income = income;
 
             VacationDays = vacationDays;
+            Folgas = folgas;
         }
 
 
@@ -153,6 +175,8 @@ namespace Visitor.RealWorld
         // Gets or sets the name
 
         public string Name { get; set; }
+
+        public int Folgas { get; set; }
 
 
         // Gets or sets income
@@ -212,7 +236,7 @@ namespace Visitor.RealWorld
         // Constructor
 
         public Clerk()
-            : base("Hank", 25000.0, 14)
+            : base("Hank", 25000.0, 14, 5)
         {
         }
     }
@@ -223,7 +247,7 @@ namespace Visitor.RealWorld
         // Constructor
 
         public Director()
-            : base("Elly", 35000.0, 16)
+            : base("Elly", 35000.0, 16, 10)
         {
         }
     }
@@ -234,7 +258,7 @@ namespace Visitor.RealWorld
         // Constructor
 
         public President()
-            : base("Dick", 45000.0, 21)
+            : base("Dick", 45000.0, 21, 15)
         {
         }
     }

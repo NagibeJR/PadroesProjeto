@@ -38,6 +38,10 @@ namespace Iterator.RealWorld
 
             collection[8] = new Item("Item 8");
 
+            collection[9] = new Item("Item 9");
+
+            collection[10] = new Item("Item 10");
+
 
             // Create iterator
 
@@ -141,7 +145,7 @@ namespace Iterator.RealWorld
     /// The 'Iterator' interface
     /// </summary>
     internal interface IAbstractIterator
-    {
+    { 
         bool IsDone { get; }
 
         Item CurrentItem { get; }
